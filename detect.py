@@ -27,10 +27,10 @@ while True:
     contours, _ = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     for contour in contours:
         (x, y, w, h) = cv2.boundingRect(contour)
-        if cv2.contourArea(contour) < 700:
+        if cv2.contourArea(contour) < 100:
             continue
         cv2.rectangle(frame1, (x, y), (x+w, y+h), (0, 255, 0), 2)
-        cv2.putText(frame1, "Movement detecting!", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3, cv2.LINE_AA)
+        cv2.putText(frame1, f"Found {len(contours)} moving polygons", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3, cv2.LINE_AA)
 
     if not ret:
         break
@@ -51,7 +51,7 @@ while True:
     # Постоянно ожидаем нажация "q" и прерываем цикл
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
-    cv2.putText(frame1, my_data, (50, 50), font, 0.6, (0,255,255), 2, cv2.LINE_4)
+    cv2.putText(frame1, my_data, (50, 50), font, 0.6, (0, 255, 255), 2, cv2.LINE_4)
     cv2.imshow("Barcode/QR Code Scanner", frame1)
     frame1 = frame2
     ret, frame2 = video.read()
